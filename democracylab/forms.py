@@ -60,4 +60,5 @@ class DemocracyLabUserCreationForm(UserCreationForm):
             user.update_linked_items()
 
         SubscribeUserToQiqoChat(user)
-        Salesforce.upsert_user(user)
+        sf = Salesforce.getInstance
+        sf.upsert_user(user)
