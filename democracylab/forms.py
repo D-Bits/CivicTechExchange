@@ -1,12 +1,14 @@
 import json
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import PermissionDenied
+
 from .models import Contributor
 from civictechprojects.models import ProjectLink, ProjectFile, FileCategory
 from common.helpers.form_helpers import read_form_field_string
 from common.helpers.qiqo_chat import SubscribeUserToQiqoChat
-from salesforce import client
 from common.models.tags import Tag
+from salesforce.client import SalesforceClient
+from salesforce import Salesforce
 
 
 class DemocracyLabUserCreationForm(UserCreationForm):
@@ -60,5 +62,4 @@ class DemocracyLabUserCreationForm(UserCreationForm):
             user.update_linked_items()
 
         SubscribeUserToQiqoChat(user)
-        sf = client.getInstance()
-        sf.upsert_user(user)
+        Salesforce.upsert_contact(user)
